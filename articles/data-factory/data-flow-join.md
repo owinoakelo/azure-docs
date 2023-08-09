@@ -9,7 +9,7 @@ ms.service: data-factory
 ms.subservice: data-flows
 ms.topic: conceptual
 ms.custom: synapse
-ms.date: 06/10/2022
+ms.date: 07/17/2023
 ---
 
 # Join transformation in mapping data flow

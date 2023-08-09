@@ -5,7 +5,7 @@ titleSuffix: Azure Digital Twins
 description: Learn about the capabilities and purpose of Azure Digital Twins Explorer (preview) and when it can be a useful tool for visualizing digital models, twins, and graphs.
 author: baanders
 ms.author: baanders # Microsoft employees only
-ms.date: 02/28/2022
+ms.date: 06/29/2023
 ms.topic: conceptual
 ms.service: digital-twins
 
@@ -60,13 +60,15 @@ The sections of the explorer are as follows:
 
 For detailed instructions on how to use each feature, see [Use Azure Digital Twins Explorer](how-to-use-azure-digital-twins-explorer.md). 
 
+[!INCLUDE [digital-twins-explorer-dtdl](../../includes/digital-twins-explorer-dtdl.md)]
+
 ## How to contribute
 
 Azure Digital Twins Explorer is an open-source tool that welcomes contributions to the code and documentation. The hosted application is deployed regularly from a source code repository in GitHub.
 
 To view the source code for the tool and read detailed instructions on how to contribute to the code, visit its GitHub repository: [digital-twins-explorer](https://github.com/Azure-Samples/digital-twins-explorer).
 
-To view instructions for contributing to this documentation, visit the [Microsoft Docs contributor guide](/contribute/).
+To view instructions for contributing to this documentation, review our [contributor guide](/contribute/).
 
 ## Other considerations
 

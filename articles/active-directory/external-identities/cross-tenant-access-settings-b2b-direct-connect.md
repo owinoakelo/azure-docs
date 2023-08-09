@@ -1,11 +1,11 @@
 ---
-title: Configure B2B direct connect cross-tenant access - Azure AD
+title: Configure B2B direct connect cross-tenant access
 description: Use cross-tenant access settings to manage how you collaborate with other Azure AD organizations. Learn how to configure  outbound access to external organizations and inbound access from external Azure AD for B2B direct connect.
 services: active-directory
 ms.service: active-directory
 ms.subservice: B2B
 ms.topic: how-to
-ms.date: 06/30/2022
+ms.date: 05/31/2023
 
 ms.author: mimart
 author: msmimart
@@ -37,6 +37,8 @@ Learn more about using cross-tenant access settings to [manage B2B direct connec
 - To configure cross-tenant access settings in the Azure portal, you'll need an account with a Global administrator or Security administrator role. Teams administrators can read cross-tenant access settings, but they can't update these settings.
 
 ## Configure default settings
+
+[!INCLUDE [portal updates](~/articles/active-directory/includes/portal-update.md)]
 
  Default cross-tenant access settings apply to all external tenants for which you haven't created organization-specific customized settings. If you want to modify the Azure AD-provided default settings, follow these steps.
 
@@ -118,7 +120,7 @@ With inbound settings, you select which external users and groups will be able t
 1. Under **Applies to**, select one of the following:
 
    - **All external users and groups**: Applies the action you chose under **Access status** to all users and groups from external Azure AD organizations.
-   - **Select external users and groups** (requires an Azure AD premium subscription): Lets you apply the action you chose under **Access status** to specific users and groups within the external organization.
+   - **Select external users and groups**: Lets you apply the action you chose under **Access status** to specific users and groups within the external organization. An Azure AD Premium P1 license is required on the tenant that you configure.
 
    ![Screenshot showing selecting the target users for b2b direct connect](media/cross-tenant-access-settings-b2b-direct-connect/generic-inbound-external-users-groups-target.png)
 
@@ -177,9 +179,18 @@ With inbound settings, you select which external users and groups will be able t
 
    - **Trust hybrid Azure AD joined devices**: Allows your Conditional Access policies to trust hybrid Azure AD joined device claims from an external organization when their users access your resources.
 
-    ![Screenshot showing inbound trust settings](media/cross-tenant-access-settings-b2b-direct-connect/inbound-trust-settings.png)
+    ![Screenshot showing inbound trust settings.](media/cross-tenant-access-settings-b2b-direct-connect/inbound-trust-settings.png)
+
+1. (This step applies to **Organizational settings** only.) Review the **Automatic redemption** option:
+
+   - **Automatically redeem invitations with the tenant** &lt;tenant&gt;: Check this setting if you want to automatically redeem invitations. If so, users from the specified tenant won't have to accept the consent prompt the first time they access this tenant using cross-tenant synchronization, B2B collaboration, or B2B direct connect. This setting will only suppress the consent prompt if the specified tenant checks this setting for outbound access as well.
+
+    ![Screenshot that shows the inbound Automatic redemption check box.](../media/external-identities/inbound-consent-prompt-setting.png)
 
 1. Select **Save**.
+
+> [!NOTE]
+> When configuring settings for an organization, you'll notice a **Cross-tenant sync** tab. This tab doesn't apply to your B2B direct connect configuration. Instead, this feature is used by multi-tenant organizations to enable B2B collaboration across their tenants. For more information, see the [multi-tenant organization documentation](../multi-tenant-organizations/index.yml).
 
 ## Modify outbound access settings
 
@@ -228,6 +239,9 @@ With outbound settings, you select which of your users and groups will be able t
    - In the **Select** pane, type the user name or the group name in the search box.
    - When you're done selecting users and groups, choose **Select**.
 
+   > [!NOTE]
+   > When targeting your users and groups, you won't be able to select users who have configured [SMS-based authentication](../authentication/howto-authentication-sms-signin.md). This is because users who have a "federated credential" on their user object are blocked to prevent external users from being added to outbound access settings. As a workaround, you can use the [Microsoft Graph API](/graph/api/resources/crosstenantaccesspolicy-overview) to add the user's object ID directly or target a group the user belongs to.
+
 1. Select **Save**.
 1. Select the **External applications** tab.
 1. Under **Access status**, select one of the following:
@@ -251,6 +265,20 @@ With outbound settings, you select which of your users and groups will be able t
    - When you're done selecting applications, choose **Select**.
 
     ![Screenshot showing adding external applications for outbound b2b direct connect](media/cross-tenant-access-settings-b2b-direct-connect/outbound-b2b-direct-connect-add-apps.png)
+
+1. Select **Save**.
+
+### To change outbound trust settings
+
+(This section applies to **Organizational settings** only.)
+
+1. Select the **Trust settings** tab.
+
+1. Review the **Automatic redemption** option:
+
+   - **Automatically redeem invitations with the tenant** &lt;tenant&gt;: Check this setting if you want to automatically redeem invitations. If so, users from this tenant don't have to accept the consent prompt the first time they access the specified tenant using cross-tenant synchronization, B2B collaboration, or B2B direct connect. This setting will only suppress the consent prompt if the specified tenant checks this setting for inbound access as well.
+
+    ![Screenshot that shows the outbound Automatic redemption check box.](../media/external-identities/outbound-consent-prompt-setting.png)
 
 1. Select **Save**.
 

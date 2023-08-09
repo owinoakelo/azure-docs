@@ -6,7 +6,7 @@ ms.author: dinethi
 ms.reviewer: mikeray
 services: azure-arc
 ms.service: azure-arc
-ms.subservice: azure-arc-data
+ms.subservice: azure-arc-data-sqlmi
 ms.custom: event-tier1-build-2022
 ms.date: 06/17/2022
 ms.topic: how-to
@@ -25,13 +25,16 @@ You can restore a database to a point-in-time within a pre-configured retention 
 You can check the retention setting for an Azure Arc-enabled SQL managed instance as follows:
 
 For **Direct** connected mode:
-```
+
+```azurecli
 az sql mi-arc show --name <SQL instance name> --resource-group <resource-group>
 #Example
 az sql mi-arc show --name sqlmi --resource-group myresourcegroup
 ```
+
 For **Indirect** connected mode:
-```
+
+```azurecli
 az sql mi-arc show --name <SQL instance name> --k8s-namespace <SQL MI namespace> --use-k8s
 #Example
 az sql mi-arc show --name sqlmi --k8s-namespace arc --use-k8s
@@ -160,7 +163,7 @@ The Retention period for an Azure Arc-enabled SQL managed instance can be reconf
 
 
 
-The ```--retention-period```  can be changed for a SQL Managed Instance-Azure Arc as follows. The below command applies to both ```direct``` and ```indirect``` connected modes. 
+The `--retention-period` can be changed for a SQL Managed Instance-Azure Arc as follows. The below command applies to both `direct` and `indirect` connected modes. 
 
 
 ```azurecli
@@ -168,6 +171,7 @@ az sql mi-arc update  --name <SQLMI name> --k8s-namespace <namespace>  --use-k8s
 ```
 
 For example:
+
 ```azurecli
 az sql mi-arc update  --name sqlmi --k8s-namespace arc  --use-k8s --retention-days 10
 ```
@@ -197,14 +201,8 @@ The backups are stored under `/var/opt/mssql/backups/archived/<dbname>/<datetime
 
 Point-in-time restore to Azure Arc-enabled SQL Managed Instance has the following limitations:
 
-- Point-in-time restore of a whole Azure Arc-enabled SQL Managed Instance is not possible. 
-- An Azure Arc-enabled SQL managed instance that is deployed with high availability does not currently support point-in-time restore.
-- You can only restore to the same Azure Arc-enabled SQL managed instance.
-- Dropping and creating different databases with same names isn't handled properly at this time.
-- Providing a future date when executing the restore operation using ```--dry-run``` will result in an error
-
-
-
+- Point-in-time restore is database level feature, not an instance level feature. You cannot restore the entire instance with Point-in-time restore.
+- You can only restore to the same Azure Arc-enabled SQL managed instance from where the backup was taken.
 
 ## Next steps
 
@@ -212,4 +210,4 @@ Point-in-time restore to Azure Arc-enabled SQL Managed Instance has the followin
 
 [Start by creating a Data Controller](create-data-controller-indirect-cli.md)
 
-[Already created a Data Controller? Create an Azure Arc-enabled SQL Managed Instance](create-sql-managed-instance.md)
+[Create an Azure Arc-enabled SQL Managed Instance](create-sql-managed-instance.md)
